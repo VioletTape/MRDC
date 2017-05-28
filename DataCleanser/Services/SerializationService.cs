@@ -8,34 +8,13 @@ using Serilog;
 
 namespace MRDC.Services {
     internal class SerializationService {
-//        internal List<MarketData> Read(FileInfo readFrom) {
-//            var marketData = new List<MarketData>();
-//            var rawData = File.ReadAllText(readFrom.FullName);
-//            using (var stringReader = new StringReader(rawData)) {
-//                marketData = JSON.Deserialize<List<MarketData>>(stringReader);
-//            }
-//            return marketData;
-//        }
-//
-//        internal List<MarketData> Read2(FileInfo readFrom) {
-//            var marketData = new List<MarketData>();
-//            var rawData = File.ReadAllText(readFrom.FullName);
-//            var settings = new JsonSerializerSettings {
-//                                                          MissingMemberHandling = MissingMemberHandling.Ignore
-//                                                          , MaxDepth = 3
-//                                                      };
-//            marketData = JsonConvert.DeserializeObject<List<MarketData>>(rawData, settings);
-//            return marketData;
-//        }
-
         internal List<MarketData> Deserialize(FileInfo readFrom) {
             Log.Logger.Information("Trying to read and deserialize file {FileToProcess}", readFrom.Name);
             var marketData = new List<MarketData>();
 
             try {
-                using (var file = File.OpenText(readFrom.FullName))
-                {
-                    marketData = (List<MarketData>)new JsonSerializer().Deserialize(file, typeof(List<MarketData>));
+                using (var file = File.OpenText(readFrom.FullName)) {
+                    marketData = (List<MarketData>) new JsonSerializer().Deserialize(file, typeof(List<MarketData>));
                 }
             }
             catch (Exception e) {

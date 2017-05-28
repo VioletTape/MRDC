@@ -1,13 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using MRDC.Extenstions;
 
 namespace MRDC.Data {
-    public class MarketData {
+    public class MarketData : IComparable<MarketData> {
         public Instrument Instrument;
         public int DataPointId;
         public DateTime DateTime;
         public string Value;
+
+
+        public int CompareTo(MarketData other) {
+            if (ReferenceEquals(this, other))
+                return 0;
+            if (ReferenceEquals(null, other))
+                return 1;
+            return DateTime.CompareTo(other.DateTime);
+        }
+
+        private sealed class ValueEqualityComparer : IEqualityComparer<MarketData> {
+            public bool Equals(MarketData x, MarketData y) {
+                if (ReferenceEquals(x, y))
+                    return true;
+                if (ReferenceEquals(x, null))
+                    return false;
+                if (ReferenceEquals(y, null))
+                    return false;
+                if (x.GetType() != y.GetType())
+                    return false;
+                return string.Equals(x.Value, y.Value);
+            }
+
+            public int GetHashCode(MarketData obj) {
+                return (obj.Value != null ? obj.Value.GetHashCode() : 0);
+            }
+        }
+
+        public static IEqualityComparer<MarketData> ValueComparer { get; } = new ValueEqualityComparer();
     }
 
     public static class MarketDataExtension {

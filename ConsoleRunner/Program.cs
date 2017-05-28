@@ -34,6 +34,8 @@ namespace ConsoleRunner {
                 // Display the default usage information
                 Console.WriteLine(options.GetUsage());
             }
+
+            Console.ReadLine();
         }
 
         private static void ProcessArguments(Options options) {

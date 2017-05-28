@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.CodeDom;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MRDC.Data;
@@ -7,7 +9,8 @@ using Serilog;
 
 namespace MRDC {
     public class MarketDataCleanser {
-        private ILogger log;
+        private readonly ILogger log;
+        private List<(DateRange, string)> uniqueMarketData;
 
         public MarketDataCleanser() {
             log = Log.Logger;
@@ -16,8 +19,8 @@ namespace MRDC {
         public IEnumerable<MarketData> CleanupDataIn(IEnumerable<MarketData> marketData) {
             var validMarketData = marketData.Where(x => x.SelfValidate().Result).Select(x => x).ToList();
             log.Information("Correct records in set: {correctRecords}", validMarketData.Count);
-
-            return new List<MarketData>();
+            GC.Collect(2);
+            return validMarketData;
         }
 
         public IEnumerable<MarketData> CleanupDataIn(DirectoryInfo soureDir) {
@@ -29,10 +32,36 @@ namespace MRDC {
             var serializationService = new SerializationService();
             foreach (var fileInfo in fileInfos) {
                 var marketData = serializationService.Deserialize(fileInfo);
-                CleanupDataIn(marketData);
+
+                var validMarketData = marketData.Where(x => x.SelfValidate().Result).Select(x => x).ToList();
+                log.Information("Correct records in set: {correctRecords}", validMarketData.Count);
+
+                validMarketData.Sort();
+                log.Information("Market data set sorted");
+
+                var dups = DeduplicateValue(validMarketData, new Last7Days());
+                log.Information("Identified {MarketDataDups} duplicates", dups);
+
+                GC.Collect(2);
             }
 
             return new List<MarketData>();
+        }
+
+        public int DeduplicateValue(List<MarketData> marketData, IDateRangeStrategy strategy) {
+            uniqueMarketData = new List<(DateRange, string)>();
+            var counter = 0;
+            foreach (var data in marketData)
+            {
+                if (uniqueMarketData.Contains(value: (data.DateTime, data.Value))) {
+                    data.Value = "0";
+                    counter++;
+                }
+                else {
+                    uniqueMarketData.Add((strategy.Get(data.DateTime), data.Value));
+                }
+            }
+            return counter;
         }
     }
 }

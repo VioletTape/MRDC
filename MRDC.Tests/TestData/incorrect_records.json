@@ -54,7 +54,7 @@
     "dateTime": "2017-06-02T22:00:00Z",
     "dataPointId": 7,
     "instrument": {
-      "instrumentId": 2,
+      "instrumentId": 2
     },
     "value": "Value7"
   },

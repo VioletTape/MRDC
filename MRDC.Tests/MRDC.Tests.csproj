@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestData\big.json" />
     <None Include="TestData\incorrect_records.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
