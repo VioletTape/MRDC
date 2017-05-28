@@ -27,6 +27,39 @@ namespace MRDC.Tests.MarketDataTests.FollowingErrorsShouldBeCaught {
         }
 
         [Test]
+        public void ObjectShouldNotBeNull() {
+            // arrange
+            MarketData data = null;
+
+            // act
+            var validation = data.SelfValidate();
+
+            // assert
+            validation.Should()
+                      .Be((false, "Market data is null"));
+        }
+
+        [Test]
+        public void DataPointShouldBeNonNegativeNumber()
+        {
+            // arrange
+            marketData.DataPointId = -1;
+
+            // act 
+            var validation = marketData.SelfValidate();
+
+            // assert
+            validation.Result
+                      .Should()
+                      .BeFalse("DataPointId should be positive");
+
+            validation.ErrorMessage
+                      .Should()
+                      .Be("DataPointId should be non-negative number. ");
+
+        }
+
+        [Test]
         public void DateShouldBeAfterYear2010() {
             // arrange
             marketData.DateTime = 31.January(2010);

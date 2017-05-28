@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net.Http.Headers;
 using CommandLine;
 using MRDC;
 using MRDC.Extenstions;

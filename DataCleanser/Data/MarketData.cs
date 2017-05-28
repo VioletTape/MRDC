@@ -5,26 +5,37 @@ using MRDC.Extenstions;
 namespace MRDC.Data {
     public class MarketData {
         public Instrument Instrument;
-        public uint DataPointId;
+        public int DataPointId;
         public DateTime DateTime;
         public string Value;
+    }
 
-        public (bool Result, string ErrorMessage) SelfValidate() {
+    public static class MarketDataExtension {
+        public static (bool Result, string ErrorMessage) SelfValidate(this MarketData data) {
+            if (data == null) {
+                return (false, "Market data is null");
+            }
+
             var errorMessage = new StringBuilder();
-            if (Instrument == null) {
+            if (data.Instrument == null) {
                 errorMessage.Append("Instrument is null. ");
             }
             else {
-                var isValidInstrument = Instrument.SelfValiate();
-                if (!isValidInstrument.Result)
+                var isValidInstrument = data.Instrument.SelfValiate();
+                if (!isValidInstrument.Result) {
                     errorMessage.Append(isValidInstrument.ErrorMessage);
+                }
             }
 
-            if (DateTime.Year < 2011) {
+            if (data.DataPointId < 0) {
+                errorMessage.Append("DataPointId should be non-negative number. ");
+            }
+
+            if (data.DateTime.Year < 2011) {
                 errorMessage.Append("Date of MarketData before 2011, that seems to be incorrect. ");
             }
 
-            if (Value.IsNullOrEmpty()) {
+            if (data.Value.IsNullOrEmpty()) {
                 errorMessage.Append("Value for MarketData is missed.");
             }
 

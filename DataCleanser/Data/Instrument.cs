@@ -4,7 +4,7 @@ using MRDC.Extenstions;
 namespace MRDC.Data
 {
     public class Instrument {
-        public uint InstrumentId;
+        public int InstrumentId;
         public string Name;
 
         public (bool Result, string ErrorMessage) SelfValiate() {

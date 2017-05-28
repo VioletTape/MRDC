@@ -29,7 +29,7 @@ namespace MRDC.Services {
 //        }
 
         internal List<MarketData> Deserialize(FileInfo readFrom) {
-            Log.Logger.Information("Trying to read and deserialize file {FileToProcess}", readFrom.FullName);
+            Log.Logger.Information("Trying to read and deserialize file {FileToProcess}", readFrom.Name);
             var marketData = new List<MarketData>();
 
             try {
@@ -39,9 +39,9 @@ namespace MRDC.Services {
                 }
             }
             catch (Exception e) {
-                Log.Logger.Error(e, "Something goes wrong with {FileToProcess}", readFrom.FullName);
+                Log.Logger.Error(e, "Something goes wrong with {FileToProcess}", readFrom.Name);
             }
-            Log.Logger.Information("{FileToProcess} processed. {MarketDataNum} found.", readFrom.FullName, marketData.Count);
+            Log.Logger.Information("{FileToProcess} processed. {MarketDataNum} found.", readFrom.Name, marketData.Count);
             return marketData;
         }
 

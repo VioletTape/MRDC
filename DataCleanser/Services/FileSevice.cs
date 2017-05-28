@@ -9,6 +9,11 @@ using Serilog;
 namespace MRDC.Services {
     internal class FileSevice {
         public List<FileInfo> GetFiles([NotNull] DirectoryInfo directory) {
+            if (!directory.Exists) {
+                Log.Warning("{SourceDir} does not exists.", directory.FullName);
+                return new List<FileInfo>();
+            }
+
             var files = Directory.GetFiles(directory.FullName)
                                  .Select(i => new FileInfo(i))
                                  .ToList();
