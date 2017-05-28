@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRDC.Tests", "MRDC.Tests\MRDC.Tests.csproj", "{45DC5360-95CB-4F56-8C27-F48EA51B19A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRDC", "DataCleanser\MRDC.csproj", "{49966AAC-EA78-4017-98F0-549DD66DC7AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleRunner", "ConsoleRunner\ConsoleRunner.csproj", "{4A891138-5E04-426E-80F5-CA3988A36FE7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45DC5360-95CB-4F56-8C27-F48EA51B19A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DC5360-95CB-4F56-8C27-F48EA51B19A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DC5360-95CB-4F56-8C27-F48EA51B19A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DC5360-95CB-4F56-8C27-F48EA51B19A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49966AAC-EA78-4017-98F0-549DD66DC7AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49966AAC-EA78-4017-98F0-549DD66DC7AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49966AAC-EA78-4017-98F0-549DD66DC7AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49966AAC-EA78-4017-98F0-549DD66DC7AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A891138-5E04-426E-80F5-CA3988A36FE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A891138-5E04-426E-80F5-CA3988A36FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A891138-5E04-426E-80F5-CA3988A36FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A891138-5E04-426E-80F5-CA3988A36FE7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

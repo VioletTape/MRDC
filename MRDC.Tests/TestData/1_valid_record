@@ -1,0 +1,11 @@
+[
+  {
+    "DateTime": "/Date(1495922400000)/",
+    "DataPointId": 100,
+    "Instrument": {
+      "InstrumentId": 100,
+      "Name": "Name1"
+    },
+    "Value": "100"
+  }
+]

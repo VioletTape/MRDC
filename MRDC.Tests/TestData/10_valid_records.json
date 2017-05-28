@@ -1,0 +1,92 @@
+[
+  {
+    "DateTime": "/Date(1495922400000)/",
+    "DataPointId": 1,
+    "Instrument": {
+      "InstrumentId": 1,
+      "Name": "Name1"
+    },
+    "Value": "Value1"
+  },
+  {
+    "DateTime": "/Date(1496008800000)/",
+    "DataPointId": 2,
+    "Instrument": {
+      "InstrumentId": 1,
+      "Name": "Name1"
+    },
+    "Value": "Value2"
+  },
+  {
+    "DateTime": "/Date(1496095200000)/",
+    "DataPointId": 3,
+    "Instrument": {
+      "InstrumentId": 1,
+      "Name": "Name1"
+    },
+    "Value": "Value3"
+  },
+  {
+    "DateTime": "/Date(1496181600000)/",
+    "DataPointId": 4,
+    "Instrument": {
+      "InstrumentId": 2,
+      "Name": "Name2"
+    },
+    "Value": "Value4"
+  },
+  {
+    "DateTime": "/Date(1496268000000)/",
+    "DataPointId": 5,
+    "Instrument": {
+      "InstrumentId": 2,
+      "Name": "Name2"
+    },
+    "Value": "Value5"
+  },
+  {
+    "DateTime": "/Date(1496354400000)/",
+    "DataPointId": 6,
+    "Instrument": {
+      "InstrumentId": 2,
+      "Name": "Name2"
+    },
+    "Value": "Value6"
+  },
+  {
+    "DateTime": "/Date(1496440800000)/",
+    "DataPointId": 7,
+    "Instrument": {
+      "InstrumentId": 2,
+      "Name": "Name2"
+    },
+    "Value": "Value7"
+  },
+  {
+    "DateTime": "/Date(1496527200000)/",
+    "DataPointId": 8,
+    "Instrument": {
+      "InstrumentId": 3,
+      "Name": "Name3"
+    },
+    "Value": "Value8"
+  },
+  {
+    "DateTime": "2017-06-05T22:00:00.111Z",
+    "DataPointId": 9,
+    "Instrument": {
+      "InstrumentId": 3,
+      "Name": "Name3"
+    },
+    "Value": "Value9"
+  },
+  {
+    "dataPointId": 10,
+    "dateTime": "2017-06-05T22:00:00Z",
+    "instrument": {
+      "instrumentId": 3,
+      "name": "Name3"
+    },
+    "value": "Value10"
+  }
+]

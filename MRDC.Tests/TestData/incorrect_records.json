@@ -1,0 +1,74 @@
+[
+  {
+    "dateTime": "2017-05-27T22:00:00Z",
+    "dataPointId": -1,
+    "instrument": {
+      "instrumentId": 1,
+      "name": "Name1"
+    },
+    "value": "Value1"
+  },
+  {
+    "dateTime": "2017-05-28T22:00:00Z",
+    "dataPointId": 2,
+    "instrument": {
+      "instrumentId": -1,
+      "name": "Name1"
+    },
+    "value": "Value2"
+  },
+  {
+    "dateTime": "0017-06-03T22:00:00Z",
+    "dataPointId": 3,
+    "instrument": {
+      "instrumentId": 1,
+      "name": "Name1"
+    },
+    "value": "Value3"
+  },
+  {
+    "dataPointId": 4,
+    "instrument": {
+      "instrumentId": 2,
+      "name": "Name2"
+    },
+    "value": "Value4"
+  },
+  {
+    "dateTime": "2017-05-31T22:00:00Z",
+    "instrument": {
+      "instrumentId": 2,
+      "name": "Name2"
+    },
+    "value": "Value5"
+  },
+  {
+    "dateTime": "2017-06-01T22:00:00Z",
+    "dataPointId": 6,
+    "instrument": {
+      "name": "Name2"
+    },
+    "value": "Value6"
+  },
+  {
+    "dateTime": "2017-06-02T22:00:00Z",
+    "dataPointId": 7,
+    "instrument": {
+      "instrumentId": 2,
+    },
+    "value": "Value7"
+  },
+  {
+    "dateTime": "2017-06-03T22:00:00Z",
+    "dataPointId": 8,
+    "value": "Value8"
+  },
+  {
+    "dateTime": "2017-06-04T22:00:00Z",
+    "dataPointId": 9,
+    "instrument": {
+      "instrumentId": 3,
+      "name": "Name3"
+    }
+  }
+]
