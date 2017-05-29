@@ -31,8 +31,13 @@ namespace MRDC {
 //        }
 
         public void CleanupDataIn(DirectoryInfo soureDir, FileInfo saveToFile) {
+            var stopwatch = Stopwatch.StartNew();
+
             Map(soureDir);
             Reduce(saveToFile);
+
+            stopwatch.Stop();
+            log.Information("Passed time {Reduce}", stopwatch.Elapsed.TotalSeconds);
         }
 
         private void Map(DirectoryInfo soureDir) {
@@ -69,8 +74,6 @@ namespace MRDC {
             var marketData = new List<MarketData>();
             var dateRangeStrategy = new Last7Days();
 
-            var startNew = Stopwatch.StartNew();
-
             using (var fileMerge = new FileMerge(saveToFile, serializationService)) {
                 var sortedTempFolders = fileSevice.GetSortedTempFolders();
                 var lastFolder = sortedTempFolders.Last();
@@ -89,11 +92,9 @@ namespace MRDC {
                     marketData.Clear();
                 }
             }
-            startNew.Stop();
-            log.Information("Passed time {Reduce}", startNew.Elapsed.TotalSeconds);
         }
 
-        public int DeduplicateValue(List<MarketData> marketData, IDateRangeStrategy strategy) {
+        internal int DeduplicateValue(List<MarketData> marketData, IDateRangeStrategy strategy) {
             var counter = 0;
             foreach (var data in marketData)
                 if (uniqueMarketData.Contains((data.DateTime, data.Value))) {
