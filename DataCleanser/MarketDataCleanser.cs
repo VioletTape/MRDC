@@ -12,6 +12,8 @@ namespace MRDC {
     public class MarketDataCleanser {
         private readonly ILogger log;
         private readonly List<(DateRange, string)> uniqueMarketData = new List<(DateRange, string)>();
+        private readonly SerializationService serializationService;
+        private readonly FileSevice fileSevice;
 
         public MarketDataCleanser(string logPath = "") {
             var pathFormat = Path.Combine(logPath, "log-{Date}.log");
@@ -21,14 +23,12 @@ namespace MRDC {
                     .CreateLogger();
 
             log = Log.Logger;
-        }
 
-//        public IEnumerable<MarketData> CleanupDataIn(IEnumerable<MarketData> marketData) {
-//            var validMarketData = marketData.Where(x => x.SelfValidate().Result).Select(x => x).ToList();
-//            log.Information("Correct records in set: {correctRecords}", validMarketData.Count);
-//            GC.Collect(2);
-//            return validMarketData;
-//        }
+            serializationService = new SerializationService();
+            fileSevice = new FileSevice();
+
+
+        }
 
         public void CleanupDataIn(DirectoryInfo soureDir, FileInfo saveToFile) {
             var stopwatch = Stopwatch.StartNew();
@@ -40,22 +40,20 @@ namespace MRDC {
             log.Information("Passed time {Reduce}", stopwatch.Elapsed.TotalSeconds);
         }
 
-        private void Map(DirectoryInfo soureDir) {
+        internal void Map(DirectoryInfo soureDir) {
             log.Information("Start processing {SourceDir}", soureDir);
 
-            var fileSevice = new FileSevice();
             fileSevice.CleanUpTempDir();
-            var fileInfos = fileSevice.GetFiles(soureDir);
 
-            var serializationService = new SerializationService();
-            foreach (var fileInfo in fileInfos) {
-                var marketData = serializationService.Deserialize(fileInfo);
+            foreach (var fileInfo in fileSevice.GetFiles(soureDir)) {
+                var marketData = serializationService
+                                         .Deserialize(fileInfo)
+                                         .Where(x => x.SelfValidate().Result)
+                                         .Select(x => x)
+                                         .ToList();
+                log.Information("Correct records in set: {correctRecords}", marketData.Count);
 
-                var validMarketData = marketData.Where(x => x.SelfValidate().Result).Select(x => x).ToList();
-                log.Information("Correct records in set: {correctRecords}", validMarketData.Count);
-
-
-                var dictionary = validMarketData.GroupBy(key => key.DateTime.GetFullHours(), md => md)
+                var dictionary = marketData.GroupBy(key => key.DateTime.GetFullHours(), md => md)
                                                 .ToDictionary(datas => datas.Key);
 
                 foreach (var keyValue in dictionary) {
@@ -67,10 +65,9 @@ namespace MRDC {
             }
         }
 
-        private void Reduce(FileInfo saveToFile) {
-            var fileSevice = new FileSevice();
+        internal void Reduce(FileInfo saveToFile) {
+
             fileSevice.CreateFile(saveToFile);
-            var serializationService = new SerializationService();
             var marketData = new List<MarketData>();
             var dateRangeStrategy = new Last7Days();
 
@@ -92,6 +89,8 @@ namespace MRDC {
                     marketData.Clear();
                 }
             }
+
+            fileSevice.CleanUpTempDir();
         }
 
         internal int DeduplicateValue(List<MarketData> marketData, IDateRangeStrategy strategy) {

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleRunner")]
-[assembly: AssemblyDescription("Console Runner for MRDC")]
+[assembly: AssemblyTitle("DataGenerator")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Console Runner for MRDC")]
-[assembly: AssemblyCopyright("Copyright  Violet Tape © 2017")]
+[assembly: AssemblyProduct("DataGenerator")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4a891138-5e04-426e-80f5-ca3988a36fe7")]
+[assembly: Guid("377286a7-359d-401a-87cc-c390787b9afe")]
 
 // Version information for an assembly consists of the following four values:
 //

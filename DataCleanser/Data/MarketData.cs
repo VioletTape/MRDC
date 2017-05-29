@@ -57,8 +57,8 @@ namespace MRDC.Data {
                 }
             }
 
-            if (data.DataPointId < 0) {
-                errorMessage.Append("DataPointId should be non-negative number. ");
+            if (data.DataPointId <= 0) {
+                errorMessage.Append("DataPointId should be positive number. ");
             }
 
             if (data.DateTime.Year < 2011) {

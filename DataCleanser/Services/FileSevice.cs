@@ -33,11 +33,12 @@ namespace MRDC.Services {
             return directoryInfo;
         }
 
-        public void CleanUpTempDir() {
+        public FileSevice CleanUpTempDir() {
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var combine = Path.Combine(baseDir, "Temp");
             if(Directory.Exists(combine))
                 Directory.Delete(combine, true);
+            return this;
         }
 
 

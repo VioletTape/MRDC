@@ -10,7 +10,7 @@ namespace MRDC.Data {
 
         public DateRange(DateTime startDate, DateTime endDate) {
             this.startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day);
-            var tmp = endDate;
+            var tmp = endDate.AddDays(1);
             this.endDate = new DateTime(tmp.Year, tmp.Month, tmp.Day).AddMilliseconds(-1);
             ;
         }

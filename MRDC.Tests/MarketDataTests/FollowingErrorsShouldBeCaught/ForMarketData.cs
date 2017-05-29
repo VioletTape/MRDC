@@ -55,7 +55,7 @@ namespace MRDC.Tests.MarketDataTests.FollowingErrorsShouldBeCaught {
 
             validation.ErrorMessage
                       .Should()
-                      .Be("DataPointId should be non-negative number. ");
+                      .Be("DataPointId should be positive number. ");
 
         }
 

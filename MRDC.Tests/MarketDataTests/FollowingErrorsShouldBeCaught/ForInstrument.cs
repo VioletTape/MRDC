@@ -52,7 +52,7 @@ namespace MRDC.Tests.MarketDataTests.FollowingErrorsShouldBeCaught {
 
             validation.ErrorMessage
                       .Should()
-                      .Be("Instrument is not initizlized, because InstrumentId is 0. Name for the instrument was not provided. ");
+                      .Be("Instrument is not initizlized, because InstrumentId should be positive number. Name for the instrument was not provided. ");
         }
 
         [Test]

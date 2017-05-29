@@ -12,7 +12,7 @@ namespace MRDC.Services {
     /// </summary>
     public class Last7Days : IDateRangeStrategy {
         public DateRange Get(DateTime startDate) {
-            return new DateRange(startDate, startDate.AddDays(7));
+            return new DateRange(startDate, startDate.AddDays(6));
         }
     }
 
@@ -30,7 +30,7 @@ namespace MRDC.Services {
                 return new DateRange(startDate, startDate.AddDays(7));
             }
             var addDays = startDate.AddDays(-7 - offset);
-            return new DateRange(addDays, addDays.AddDays(7));
+            return new DateRange(addDays, addDays.AddDays(6));
         }
     }
 }

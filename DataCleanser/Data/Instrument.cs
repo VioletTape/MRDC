@@ -8,8 +8,8 @@ namespace MRDC.Data {
 
         public (bool Result, string ErrorMessage) SelfValidate() {
             var errorMessage = new StringBuilder();
-            if (InstrumentId == 0) {
-                errorMessage.Append("Instrument is not initizlized, because InstrumentId is 0. ");
+            if (InstrumentId <= 0) {
+                errorMessage.Append("Instrument is not initizlized, because InstrumentId should be positive number. ");
             }
 
             if (Name.IsNullOrEmpty()) {

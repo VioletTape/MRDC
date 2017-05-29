@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRDC", "DataCleanser\MRDC.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleRunner", "ConsoleRunner\ConsoleRunner.csproj", "{4A891138-5E04-426E-80F5-CA3988A36FE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator", "DataGenerator\DataGenerator.csproj", "{377286A7-359D-401A-87CC-C390787B9AFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4A891138-5E04-426E-80F5-CA3988A36FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A891138-5E04-426E-80F5-CA3988A36FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A891138-5E04-426E-80F5-CA3988A36FE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377286A7-359D-401A-87CC-C390787B9AFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377286A7-359D-401A-87CC-C390787B9AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377286A7-359D-401A-87CC-C390787B9AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377286A7-359D-401A-87CC-C390787B9AFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
