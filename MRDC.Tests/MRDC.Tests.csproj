@@ -71,6 +71,7 @@
     <Compile Include="DateRangeTests\WhenCreate.cs" />
     <Compile Include="ExtensionTests\DateTimeExtensionTests.cs" />
     <Compile Include="ExtensionTests\DirectoryInfoExtenstionsTests.cs" />
+    <Compile Include="MarketDataCleanserTests\WhenDeduplicateData.cs" />
     <Compile Include="MarketDataTests\FollowingErrorsShouldBeCaught\ForInstrument.cs" />
     <Compile Include="MarketDataTests\FollowingErrorsShouldBeCaught\ForMarketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

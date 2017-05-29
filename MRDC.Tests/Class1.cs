@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -72,8 +70,8 @@ namespace MRDC.Tests {
             using (var fileStream = File.OpenWrite(fileInfo.FullName)) {
                 var streamWriter = new StreamWriter(fileStream);
                 streamWriter.Write("[");
-                for (int i = 0; i < 5_000_000; i++) {
-                    var t = 1495984110000 - i*10_000;
+                for (var i = 0; i < 5_000_000; i++) {
+                    var t = 1495984110000 - i * 10_000;
                     streamWriter.Write("{\r\n    \"DateTime\": \"/Date(" + t + ")/\",\r\n    \"DataPointId\": 100,\r\n    \"Instrument\": {\r\n      \"InstrumentId\": 100,\r\n      \"Name\": \"Name1\"\r\n    },\r\n    \"Value\": \"100\"\r\n  }");
                     streamWriter.Write(",");
                 }
@@ -83,82 +81,6 @@ namespace MRDC.Tests {
             }
         }
 
-        [Test]
-        public void testnamexx() {
-            var dateRange = new DateRange(15.May(2017), DateTime.Now);
-            dateRange.Contains(DateTime.Now);
-
-
-            var dates = new List<DateRange> {
-                                    new DateRange(1.January(2017), 1.February(2017))
-                                };
-
-            var yes = dates.Contains(new DateRange(5.January(2017)));
-        }
-
-        [Test]
-        public void testnamesdfg() {
-            var marketDatas = new List<MarketData> {
-                                                       new MarketData {
-                                                                          DateTime = 28.May(2017),
-                                                                          Value = "A"
-                                                                      },
-                                                       new MarketData {
-                                                                          DateTime = 29.May(2017),
-                                                                          Value = "B"
-                                                                      },
-                                                       new MarketData {
-                                                                          DateTime = 30.May(2017),
-                                                                          Value = "A"
-                                                                      },
-                                                   };
-            new MarketDataCleanser().DeduplicateValue(marketDatas, new Last7Days());
-            marketDatas[2]
-                    .Value
-                    .Should()
-                    .Be("0");
-        }
-
-        [Test]
-        public void testnamesdfgWeek()
-        {
-            var marketDatas = new List<MarketData> {
-                                                       new MarketData {
-                                                                          DateTime = 28.May(2017),
-                                                                          Value = "A"
-                                                                      },
-                                                       new MarketData {
-                                                                          DateTime = 29.May(2017),
-                                                                          Value = "B"
-                                                                      },
-                                                       new MarketData {
-                                                                          DateTime = 30.May(2017),
-                                                                          Value = "A"
-                                                                      },
-                                                   };
-            new MarketDataCleanser().DeduplicateValue(marketDatas, new CalendarWeek());
-            marketDatas[2]
-                    .Value
-                    .Should()
-                    .Be("A");
-        }
-
-        [Test]
-        public void dayOfWeek() {
-            var currentInfoFirstDayOfWeek = DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
-
-            var dateTime = DateTime.Now;
-            var ofWeek = (int)dateTime.DayOfWeek;
-            var infoFirstDayOfWeek = (int)currentInfoFirstDayOfWeek;
-            var offset = ofWeek - infoFirstDayOfWeek;
-            if (offset == 0) {
-                var dateRangeX = new DateRange(dateTime, dateTime.AddDays(7));
-            }
-            if (offset < 0) {
-                var addDays = dateTime.AddDays(-7 - offset);
-                var dateRange = new DateRange(addDays, addDays.AddDays(7));
-            }
-        }
 
         [Test]
         public void BigRead() {
