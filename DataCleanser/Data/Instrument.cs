@@ -6,7 +6,7 @@ namespace MRDC.Data {
         public int InstrumentId;
         public string Name;
 
-        public (bool Result, string ErrorMessage) SelfValiate() {
+        public (bool Result, string ErrorMessage) SelfValidate() {
             var errorMessage = new StringBuilder();
             if (InstrumentId == 0) {
                 errorMessage.Append("Instrument is not initizlized, because InstrumentId is 0. ");

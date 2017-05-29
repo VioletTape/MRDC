@@ -51,7 +51,7 @@ namespace MRDC.Data {
                 errorMessage.Append("Instrument is null. ");
             }
             else {
-                var isValidInstrument = data.Instrument.SelfValiate();
+                var isValidInstrument = data.Instrument.SelfValidate();
                 if (!isValidInstrument.Result) {
                     errorMessage.Append(isValidInstrument.ErrorMessage);
                 }
