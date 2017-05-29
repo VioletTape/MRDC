@@ -47,5 +47,10 @@ namespace MRDC.Tests.FileMergeTests {
                                 .Should()
                                 .Be(10);
         }
+
+        [TearDown]
+        public void TearDown() {
+            GetFileInfo().Delete();
+        }
     }
 }
