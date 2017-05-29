@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileMergeTests\WhenWriteData.cs" />
     <Compile Include="TestData\InstantSmallJsonFileGenerator.cs" />
     <Compile Include="DateRangeTests\WhenCompare.cs" />
     <Compile Include="DateRangeTests\WhenCreate.cs" />
