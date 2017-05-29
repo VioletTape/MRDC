@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -15,7 +16,6 @@ namespace MRDC.Services {
             var files = Directory.GetFiles(directory.FullName)
                                  .Select(i => new FileInfo(i))
                                  .ToList();
-            Log.Logger.Information("{ConsumeDirectory} contains {FoundFilesNum} files", directory.FullName, files.Count);
             return files;
         }
 
@@ -23,6 +23,39 @@ namespace MRDC.Services {
             Directory.CreateDirectory(fileInfo.DirectoryName);
             var fileStream = fileInfo.Create();
             fileStream.Close();
+        }
+
+        public DirectoryInfo CreateTempDir(string dirName) {
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var combine = Path.Combine(baseDir, "Temp", dirName);
+            var directoryInfo = new DirectoryInfo(combine);
+            directoryInfo.Create();
+            return directoryInfo;
+        }
+
+        public void CleanUpTempDir() {
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var combine = Path.Combine(baseDir, "Temp");
+            if(Directory.Exists(combine))
+                Directory.Delete(combine, true);
+        }
+
+
+        public DirectoryInfo GetTempDir() {
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var combine = Path.Combine(baseDir, "Temp");
+            var directoryInfo = new DirectoryInfo(combine);
+            if (!directoryInfo.Exists) {
+                directoryInfo.Create();
+            }
+            return directoryInfo;
+        }
+
+        public List<DirectoryInfo> GetSortedTempFolders() {
+            var tempDir = GetTempDir();
+            var folders = tempDir.GetDirectories().ToList();
+            folders.Sort((dix, diy) => string.Compare(dix.Name, diy.Name, StringComparison.Ordinal));
+            return folders;
         }
     }
 }

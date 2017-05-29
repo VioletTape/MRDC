@@ -29,15 +29,15 @@ namespace MRDC.Data {
                     return false;
                 if (x.GetType() != y.GetType())
                     return false;
-                return string.Equals(x.Value, y.Value);
+                return string.Equals(x.DateTime, y.DateTime);
             }
 
             public int GetHashCode(MarketData obj) {
-                return (obj.Value != null ? obj.Value.GetHashCode() : 0);
+                return obj.DateTime.GetHashCode();
             }
         }
 
-        public static IEqualityComparer<MarketData> ValueComparer { get; } = new ValueEqualityComparer();
+        public static IEqualityComparer<MarketData> DateComparer { get; } = new ValueEqualityComparer();
     }
 
     public static class MarketDataExtension {

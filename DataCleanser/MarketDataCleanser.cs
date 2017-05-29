@@ -1,32 +1,45 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using MRDC.Data;
+using MRDC.Extenstions;
 using MRDC.Services;
 using Serilog;
 
 namespace MRDC {
     public class MarketDataCleanser {
         private readonly ILogger log;
-        private List<(DateRange, string)> uniqueMarketData;
+        private readonly List<(DateRange, string)> uniqueMarketData = new List<(DateRange, string)>();
 
-        public MarketDataCleanser() {
+        public MarketDataCleanser(string logPath = "") {
+            var pathFormat = Path.Combine(logPath, "log-{Date}.log");
+            Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Logger(Log.Logger)
+                    .WriteTo.AsyncRollingFile(pathFormat)
+                    .CreateLogger();
+
             log = Log.Logger;
         }
 
-        public IEnumerable<MarketData> CleanupDataIn(IEnumerable<MarketData> marketData) {
-            var validMarketData = marketData.Where(x => x.SelfValidate().Result).Select(x => x).ToList();
-            log.Information("Correct records in set: {correctRecords}", validMarketData.Count);
-            GC.Collect(2);
-            return validMarketData;
+//        public IEnumerable<MarketData> CleanupDataIn(IEnumerable<MarketData> marketData) {
+//            var validMarketData = marketData.Where(x => x.SelfValidate().Result).Select(x => x).ToList();
+//            log.Information("Correct records in set: {correctRecords}", validMarketData.Count);
+//            GC.Collect(2);
+//            return validMarketData;
+//        }
+
+        public void CleanupDataIn(DirectoryInfo soureDir, FileInfo saveToFile) {
+            Map(soureDir);
+            Reduce(saveToFile);
         }
 
-        public IEnumerable<MarketData> CleanupDataIn(DirectoryInfo soureDir) {
+        private void Map(DirectoryInfo soureDir) {
             log.Information("Start processing {SourceDir}", soureDir);
 
             var fileSevice = new FileSevice();
+            fileSevice.CleanUpTempDir();
             var fileInfos = fileSevice.GetFiles(soureDir);
 
             var serializationService = new SerializationService();
@@ -36,31 +49,60 @@ namespace MRDC {
                 var validMarketData = marketData.Where(x => x.SelfValidate().Result).Select(x => x).ToList();
                 log.Information("Correct records in set: {correctRecords}", validMarketData.Count);
 
-                validMarketData.Sort();
-                log.Information("Market data set sorted");
 
-                var dups = DeduplicateValue(validMarketData, new Last7Days());
-                log.Information("Identified {MarketDataDups} duplicates", dups);
+                var dictionary = validMarketData.GroupBy(key => key.DateTime.GetFullHours(), md => md)
+                                                .ToDictionary(datas => datas.Key);
+
+                foreach (var keyValue in dictionary) {
+                    var tempDir = fileSevice.CreateTempDir(keyValue.Key.ToString("yyyyMMddHH"));
+                    serializationService.SerializeFast(keyValue.Value.ToList(), tempDir.GetTempFile());
+                }
 
                 GC.Collect(2);
             }
+        }
 
-            return new List<MarketData>();
+        private void Reduce(FileInfo saveToFile) {
+            var fileSevice = new FileSevice();
+            fileSevice.CreateFile(saveToFile);
+            var serializationService = new SerializationService();
+            var marketData = new List<MarketData>();
+            var dateRangeStrategy = new Last7Days();
+
+            var startNew = Stopwatch.StartNew();
+
+            using (var fileMerge = new FileMerge(saveToFile, serializationService)) {
+                var sortedTempFolders = fileSevice.GetSortedTempFolders();
+                var lastFolder = sortedTempFolders.Last();
+                foreach (var directoryInfo in sortedTempFolders) {
+                    var fileInfos = fileSevice.GetFiles(directoryInfo);
+                    fileInfos.ForEach(i => marketData.AddRange(serializationService.DeserializeFast(i)));
+
+                    marketData.Sort();
+                    log.Information("Market data set sorted");
+
+                    var dups = DeduplicateValue(marketData, dateRangeStrategy);
+                    log.Information("Identified {MarketDataDups} duplicates", dups);
+
+                    log.Information("Market data chunk sorted for {MarketDataDate}", directoryInfo.Name);
+                    fileMerge.Append(marketData, lastFolder == directoryInfo);
+                    marketData.Clear();
+                }
+            }
+            startNew.Stop();
+            log.Information("Passed time {Reduce}", startNew.Elapsed.TotalSeconds);
         }
 
         public int DeduplicateValue(List<MarketData> marketData, IDateRangeStrategy strategy) {
-            uniqueMarketData = new List<(DateRange, string)>();
             var counter = 0;
             foreach (var data in marketData)
-            {
-                if (uniqueMarketData.Contains(value: (data.DateTime, data.Value))) {
+                if (uniqueMarketData.Contains((data.DateTime, data.Value))) {
                     data.Value = "0";
                     counter++;
                 }
                 else {
                     uniqueMarketData.Add((strategy.Get(data.DateTime), data.Value));
                 }
-            }
             return counter;
         }
     }

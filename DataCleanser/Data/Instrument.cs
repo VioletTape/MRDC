@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using MRDC.Extenstions;
 
-namespace MRDC.Data
-{
+namespace MRDC.Data {
     public class Instrument {
         public int InstrumentId;
         public string Name;

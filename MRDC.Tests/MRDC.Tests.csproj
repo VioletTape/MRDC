@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -66,13 +67,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DateRangeTests\WhenCompare.cs" />
+    <Compile Include="DateRangeTests\WhenCreate.cs" />
     <Compile Include="MarketDataTests\FollowingErrorsShouldBeCaught\ForInstrument.cs" />
     <Compile Include="MarketDataTests\FollowingErrorsShouldBeCaught\ForMarketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TestData\big.json" />
     <None Include="TestData\incorrect_records.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

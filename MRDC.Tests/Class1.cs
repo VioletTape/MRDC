@@ -43,7 +43,7 @@ namespace MRDC.Tests {
 
             new FileSevice().CreateFile(fileInfo);
 
-            rd.Serialize(marketData, fileInfo);
+            rd.SerializeFast(marketData, fileInfo);
 
             var marketDatas = rd.Deserialize(fileInfo);
             marketDatas.Count.Should().Be(10);
@@ -73,7 +73,7 @@ namespace MRDC.Tests {
                 var streamWriter = new StreamWriter(fileStream);
                 streamWriter.Write("[");
                 for (int i = 0; i < 5_000_000; i++) {
-                    var t = 1495984110000 - i;
+                    var t = 1495984110000 - i*10_000;
                     streamWriter.Write("{\r\n    \"DateTime\": \"/Date(" + t + ")/\",\r\n    \"DataPointId\": 100,\r\n    \"Instrument\": {\r\n      \"InstrumentId\": 100,\r\n      \"Name\": \"Name1\"\r\n    },\r\n    \"Value\": \"100\"\r\n  }");
                     streamWriter.Write(",");
                 }
@@ -158,6 +158,12 @@ namespace MRDC.Tests {
                 var addDays = dateTime.AddDays(-7 - offset);
                 var dateRange = new DateRange(addDays, addDays.AddDays(7));
             }
+        }
+
+        [Test]
+        public void BigRead() {
+            var readFrom = new FileInfo(@"D:\Projects\MRDC\ConsoleRunner\bin\Debug\Result\cleanData.json");
+            var deserializeFast = new SerializationService().DeserializeFast(readFrom);
         }
     }
 }

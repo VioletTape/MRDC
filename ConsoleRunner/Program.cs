@@ -26,15 +26,16 @@ namespace ConsoleRunner {
                 ProcessArguments(options);
                 LogArguments(options);
 
-                var marketDataCleanser = new MarketDataCleanser();
+                var marketDataCleanser = new MarketDataCleanser(options.LogTo);
                 var sourceDirectory = new DirectoryInfo(options.DirectoryToRead);
-                marketDataCleanser.CleanupDataIn(sourceDirectory);
+                var saveToFile = new FileInfo(options.SaveTo);
+                marketDataCleanser.CleanupDataIn(sourceDirectory, saveToFile);
             }
             else {
-                // Display the default usage information
                 Console.WriteLine(options.GetUsage());
             }
 
+            Console.WriteLine("Processing finised. Press any key to continue...");
             Console.ReadLine();
         }
 
@@ -80,7 +81,7 @@ namespace ConsoleRunner {
             }
         }
 
-        public static (bool Result, string Message) IsPathAccessable(string path) {
+        private static (bool Result, string Message) IsPathAccessable(string path) {
             if (path.IsNullOrEmpty())
                 return (false, "Path is empty.");
 

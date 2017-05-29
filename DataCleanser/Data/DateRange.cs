@@ -1,14 +1,18 @@
 ﻿using System;
 
-namespace MRDC {
-    public struct DateRange  {
+namespace MRDC.Data {
+    /// <summary>
+    /// Represent date range 
+    /// </summary>
+    public struct DateRange {
         private readonly DateTime startDate;
         private readonly DateTime endDate;
 
         public DateRange(DateTime startDate, DateTime endDate) {
             this.startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day);
             var tmp = endDate;
-            this.endDate = new DateTime(tmp.Year, tmp.Month, tmp.Day).AddMilliseconds(-1); ;
+            this.endDate = new DateTime(tmp.Year, tmp.Month, tmp.Day).AddMilliseconds(-1);
+            ;
         }
 
         public DateRange(DateTime startDate) : this() {
@@ -18,15 +22,13 @@ namespace MRDC {
 
         public bool Contains(DateTime date) {
             if (startDate <= date) {
-                return date >= endDate;
+                return date <= endDate;
             }
             return false;
         }
 
-        public bool Contains(DateRange dateRange)
-        {
-            if (startDate <= dateRange.startDate)
-            {
+        public bool Contains(DateRange dateRange) {
+            if (startDate <= dateRange.startDate) {
                 return dateRange.endDate <= endDate;
             }
             return false;
